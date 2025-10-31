@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct WeekDay {
+    char *dayTitle;
+    int date;
+    char *task;
+};
+
+struct WeekDay* initCalendar() {
+    struct WeekDay *calendar = (struct WeekDay*)malloc(7 * sizeof(struct WeekDay));
+    return calendar;
+}
+
+void inputData(struct WeekDay *calendar) {
+    for (int i = 0; i < 7; i++) {
+        calendar[i].dayTitle = (char*)malloc(20 * sizeof(char));
+        calendar[i].task = (char*)malloc(100 * sizeof(char));
+
+        printf("Enter name of day %d: ", i + 1);
+        scanf("%s", calendar[i].dayTitle);
+
+        printf("Enter date for %s: ", calendar[i].dayTitle);
+        scanf("%d", &calendar[i].date);
+
+        printf("Enter planned activity for %s: ", calendar[i].dayTitle);
+        getchar(); // clear newline from buffer
+        scanf("%[^\n]", calendar[i].task);  // ✅ fixed line
+    }
+}
+
+void showCalendar(struct WeekDay *calendar) {
+    printf("\nWEEKLY ACTIVITY PLANNER:\n");
+    for (int i = 0; i < 7; i++) {
+        printf("%s (%d): %s\n", calendar[i].dayTitle, calendar[i].date, calendar[i].task);
+    }
+}
+
+int main() {
+    struct WeekDay *calendar;
+    calendar = initCalendar();
+
+    printf("=== Weekly Schedule Creator ===\n");
+    inputData(calendar);
+    showCalendar(calendar);
+
+    for (int i = 0; i < 7; i++) {
+        free(calendar[i].dayTitle);
+        free(calendar[i].task);
+    }
+    free(calendar);
+    return 0;
+}
