@@ -1,0 +1,120 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *head = NULL;
+
+void insert(int val) {
+    struct Node *newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = val;
+    if (head == NULL) {
+        head = newNode;
+        newNode->next = head;
+    } else {
+        struct Node *temp = head;
+        while (temp->next != head)
+            temp = temp->next;
+        temp->next = newNode;
+        newNode->next = head;
+    }
+    printf("%d added to list\n", val);
+}
+
+void deleteStart() {
+    if (head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node *temp = head;
+    if (head->next == head) {
+        head = NULL;
+    } else {
+        struct Node *last = head;
+        while (last->next != head)
+            last = last->next;
+        head = head->next;
+        last->next = head;
+    }
+    printf("%d removed from start\n", temp->data);
+    free(temp);
+}
+
+void deleteEnd() {
+    if (head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node *temp = head, *prev = NULL;
+    if (head->next == head) {
+        printf("%d removed from end\n", head->data);
+        free(head);
+        head = NULL;
+        return;
+    }
+    while (temp->next != head) {
+        prev = temp;
+        temp = temp->next;
+    }
+    prev->next = head;
+    printf("%d removed from end\n", temp->data);
+    free(temp);
+}
+
+void deleteValue(int val) {
+    if (head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    if (head->data == val) {
+        deleteStart();
+        return;
+    }
+    struct Node *temp = head, *prev;
+    do {
+        prev = temp;
+        temp = temp->next;
+        if (temp->data == val) {
+            prev->next = temp->next;
+            printf("%d deleted\n", val);
+            free(temp);
+            return;
+        }
+    } while (temp != head);
+    printf("%d not present in list\n", val);
+}
+
+void display() {
+    if (head == NULL) {
+        printf("List is empty\n");
+        return;
+    }
+    struct Node *temp = head;
+    printf("List elements: ");
+    do {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    } while (temp != head);
+    printf("\n");
+}
+
+int main() {
+    insert(5);
+    insert(15);
+    insert(25);
+    insert(35);
+    display();
+    deleteStart();
+    display();
+    deleteEnd();
+    display();
+    deleteValue(15);
+    display();
+    deleteValue(50);
+    display();
+    return 0;
+}
+
