@@ -1,0 +1,64 @@
+#include <stdio.h>
+#include <stdbool.h>
+
+int isMatch(char STR[], char PAT[], int start)
+{
+    int i = 0;
+    while (PAT[i] != '\0')
+    {
+        if (STR[start + i] != PAT[i])
+            return false;
+        i++;
+    }
+    return true;
+}
+
+void replacePattern(char STR[], char PAT[], char REP[])
+{
+    char RESULT[200];
+    int i = 0, j = 0, k;
+    int patLen = 0, repLen = 0, found = false;
+
+    while (PAT[patLen] != '\0') patLen++;
+    while (REP[repLen] != '\0') repLen++;
+
+    while (STR[i] != '\0')
+    {
+        if (isMatch(STR, PAT, i))
+        {
+            for (k = 0; k < repLen; k++)
+                RESULT[j++] = REP[k];
+            i += patLen;
+            found = true;
+        }
+        else
+        {
+            RESULT[j++] = STR[i++];
+        }
+    }
+
+    RESULT[j] = '\0';
+
+    if (found)
+        printf("\nModified String: %s\n", RESULT);
+    else
+        printf("\nPattern not found in STR\n");
+}
+
+int main()
+{
+    char STR[200], PAT[50], REP[50];
+
+    printf("Enter main string: ");
+    scanf("%[^\n]", STR);
+    getchar();
+    printf("Enter pattern string: ");
+    scanf("%[^\n]", PAT);
+    getchar();
+    printf("Enter replacement string: ");
+    scanf("%[^\n]", REP);
+
+    replacePattern(STR, PAT, REP);
+    return 0;
+}
+
