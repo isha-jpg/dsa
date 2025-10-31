@@ -1,0 +1,68 @@
+#include <stdio.h>
+
+void bubbleSort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int swapped = 0;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                swapped = 1;
+            }
+        }
+        if (!swapped) break;
+    }
+}
+
+void display(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+void selectionSortDesc(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        int maxIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] > arr[maxIndex]) {
+                maxIndex = j;
+            }
+        }
+        int temp = arr[i];
+        arr[i] = arr[maxIndex];
+        arr[maxIndex] = temp;
+    }
+}
+
+void display(int arr[], int n) {
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {45, -2, 11, 0, -9};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array: ");
+    display(arr, n);
+
+    bubbleSort(arr, n);
+
+    printf("Sorted in Ascending Order: ");
+    display(arr, n);
+    int ar1r[] = {12, 5, 7, 3, 19};
+    int n = sizeof(ar1r) / sizeof(ar1r[0]);
+
+    printf("Original array: ");
+    display(ar1r, n);
+
+    selectionSortDesc(ar1r, n);
+
+    printf("Sorted in Descending Order: ");
+    display(ar1r, n);
+
+    return 0;
+}
+
