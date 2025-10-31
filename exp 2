@@ -1,0 +1,38 @@
+#include <stdio.h>
+
+int findSum(int num) {
+    return (num == 0) ? 0 : num + findSum(num - 1);
+}
+
+int fib(int term) {
+    if (term <= 1)
+        return term;
+    return fib(term - 1) + fib(term - 2);
+}
+
+void hanoi(int disks, char src, char aux, char dest) {
+    if (disks == 1) {
+        printf("Move disk from %c to %c\n", src, dest);
+        return;
+    }
+    hanoi(disks - 1, src, dest, aux);
+    printf("Move disk %d from %c to %c\n", disks, src, dest);
+    hanoi(disks - 1, aux, src, dest);
+}
+
+int main() {
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+
+    printf("Sum (1 to %d): %d\n", n, findSum(n));
+    printf("Fibonacci Series: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", fib(i));
+    }
+    printf("\nTower of Hanoi Steps:\n");
+    hanoi(n, 'A', 'B', 'C');
+    return 0;
+}
+
+
